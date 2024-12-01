@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hortifruti - Loja Online</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">🍓 Hortifruti</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/sobre.html">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/produtos.html">Produtos <span class="badge text-bg-secondary">NOVO</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contato.html">Contato</a>
+            </li>
+
+            <!-- Esse botão chama o modal de login -->
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login
+              </button>              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Modal de login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="loginModalLabel">Login</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="loginInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">Nunca iremos compartilhar seu email com ninguém.</div>
+              </div>
+              <div class="mb-3">
+                <label for="loginInputPassword1" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="loginInputPassword1">
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="loginCheck1">
+                <label class="form-check-label" for="loginCheck1">Lembrar</label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrosel -->
+    <div id="carouselAutoplaying" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="5000">
+          <img src="/img/frutas.jpg" class="d-block w-100" alt="Frutas variadas">
+          <div class="carousel-caption d-none d-md-block">
+            <h1>Bem-vindo ao Hortifruti</h1>
+            <p>Um hortifruti online, que é muito mais prático do que ir até uma loja física.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+          <img src="/img/morango.jpg" class="d-block w-100" alt="Morangos">
+          <div class="carousel-caption d-none d-md-block">
+            <h1>Diversidade de opções</h1>
+            <p>Oferecemos inúmeras opções de frutas para você escolher.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+          <img src="/img/mirtilo.jpg" class="d-block w-100" alt="Mirtilos">
+          <div class="carousel-caption d-none d-md-block">
+            <h1>Qualidade comprovada</h1>
+            <p>Nossas frutas são de qualidade excepcional.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+      </button>
+    </div>
+
+    <!-- Cards -->
+    <div class="card">
+      <div class="card-header">
+        📣 Veja o que os nossos clientes dizem
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>Só compro desse hortifruti. Tudo maravilhoso e fresco, sem contar a entrega rápida!</p>
+          <footer class="blockquote-footer">Cliente da loja, <cite title="Source Title">em entrevista para um jornal.</cite></footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">⚡ Promoção relâmpago!</h5>
+            <p class="card-text">Aproveite as nossas ofertas exclusivas, com descontos de até 50%</p>
+            <a href="/produtos.html" class="btn btn-primary">Desfrutar</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">📱 Não segue a gente ainda?</h5>
+            <p class="card-text">Siga as nossas redes sociais.</p>
+            <a href="https://x.com/" class="btn btn-primary"><img src="img/xicone.png" width="15px"> X</a>
+            <a href="https://instagram.com/" class="btn btn-primary"><img src="img/instagramicone.png" width="15px"> Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-dark text-white py-4 mt-5">
+      <div class="text-center mt-3">
+        <p>&copy; 2024 Hortifruti. Todos os direitos reservados. <strong>Feito por Thiago Monteiro e Guilherme Cauã.</strong></p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
