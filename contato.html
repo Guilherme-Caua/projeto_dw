@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Hortifruti - Contato</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -69,8 +70,34 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <button type="submit" class="btn btn-primary" id="buttonEntrar" onClick="realizarLogin()">Entrar</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast que é mostrado quando os dados de login estão incorretos -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToastIncorreto" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">❌ Login incorreto</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+          Verifique os seus dados e tente novamente.
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast que é mostrado quando você clica para contatar -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToastEnviado" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">✅ Enviado</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+          Sua mensagem foi enviada com sucesso.
         </div>
       </div>
     </div>
@@ -78,16 +105,19 @@
     <!-- Form de contato -->
     <div class="p-3">
         <h1>Contato</h1>
-        <div class="mb-3">
-            <label for="FormControlInput1" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="FormControlInput1" placeholder="nome@exemplo.com">
-        </div>
-        <div class="mb-3">
-            <label for="FormControlTextarea1" class="form-label">Mensagem:</label>
-            <textarea class="form-control" id="FormControlTextarea1" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <form id="form-contato">
+          <div class="mb-3">
+              <label for="FormControlInput1" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="FormControlInput1" placeholder="nome@exemplo.com" required>
+          </div>
+          <div class="mb-3">
+              <label for="FormControlTextarea1" class="form-label">Mensagem:</label>
+              <textarea class="form-control" id="FormControlTextarea1" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
     </div>
+    
 
     <!-- Rodapé -->
     <footer class="bg-dark text-white py-4 mt-5">
@@ -97,5 +127,49 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script>
+      // Login (péssima prática abaixo, mas como não estamos trabalhando com backend, é o que tem pra hoje)
+      function realizarLogin(){
+
+        // Toast de login incorreto
+        const toastLiveIncorreto = document.getElementById('liveToastIncorreto');
+        const toastBootstrapIncorreto = bootstrap.Toast.getOrCreateInstance(toastLiveIncorreto);
+
+        const loginInputEmail = document.getElementById('loginInputEmail1').value;
+        const loginInputPassword = document.getElementById('loginInputPassword1').value;
+
+        // Só pra não ficar em plain text também, coloquei em Base64
+        const email = "bm9tZS1kby1hbHVubzFAZmF0ZWMuY29t";
+        const senha = "bm9tZS1kby1hbHVubzI=";
+
+        const emailDecodificado = atob(email);
+        const senhaDecodificada = atob(senha);
+
+        if(loginInputEmail === emailDecodificado && loginInputPassword === senhaDecodificada){
+            window.location.replace("/produtoslogado.html");
+        } else {
+          toastBootstrapIncorreto.show();
+        }
+        
+      }
+
+      // Form de contato
+      const formContato = document.getElementById('form-contato');
+      
+      formContato.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const toastLiveEnviado = document.getElementById('liveToastEnviado');
+        const toastBootstrapEnviado = bootstrap.Toast.getOrCreateInstance(toastLiveEnviado);
+
+        if (!formContato.checkValidity()) {
+            formContato.reportValidity();
+            return;
+        }
+
+        toastBootstrapEnviado.show();
+      })
+    </script>
   </body>
 </html>

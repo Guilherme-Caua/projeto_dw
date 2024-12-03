@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Hortifruti - Produtos</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -30,12 +31,143 @@
             <li class="nav-item">
               <a class="nav-link" href="/contato.html">Contato</a>
             </li>
+            <li class="nav-item">
+              <a class="btn btn-primary" href="#carrinho" role="button">Meu carrinho</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-danger" href="/index.html" role="button">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
+    
+    <!-- Modal de finalizar compra -->
+    <div class="modal fade" id="compraModal" tabindex="-1" aria-labelledby="compraModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="compraModalLabel">Finalizar compra</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-compra" method="get" action=".">
+              <div class="mb-3">
+                <label for="cep" class="form-label">CEP:</label>
+                <input name="cep" type="text" id="cep" class="form-control" maxlength="9" placeholder="Insira seu CEP para autocompletar o endereço" required />
+              </div>
+              <div class="mb-3">
+                <label for="rua" class="form-label">Rua:</label>
+                <input name="rua" type="text" id="rua" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="bairro" class="form-label">Bairro:</label>
+                <input name="bairro" type="text" id="bairro" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade:</label>
+                <input name="cidade" type="text" id="cidade" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="uf" class="form-label">Estado:</label>
+                <input name="uf" type="text" id="uf" class="form-control" maxlength="2" required />
+              </div>
+              <div class="mb-3">
+                <label for="numero" class="form-label">Número:</label>
+                <input name="numero" type="text" id="numero" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="numero" class="form-label">Complemento:</label>
+                <input name="complemento" type="text" id="complemento" class="form-control" required />
+              </div>
+            
+              <h3>💳 Métodos de pagamento</h3>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="metodoPagamento" id="flexRadioDefault1" required />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Cartão de crédito/débito
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="metodoPagamento" id="flexRadioDefault2" />
+                <label class="form-check-label" for="flexRadioDefault2">
+                  PIX
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="metodoPagamento" id="flexRadioDefault3" />
+                <label class="form-check-label" for="flexRadioDefault3">
+                  Boleto
+                </label>
+              </div>
+            </form>            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+            <button type="button" class="btn btn-success" id="botao-confirmar-compra">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Produtos, etc -->
+    <!-- Toasts -->
+    <!-- Toast que é mostrado quando você adiciona algo ao carrinho -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToastAdicionado" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">🛒 Adicionado ao carrinho</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+          Item adicionado ao carrinho de compras com sucesso!
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast quando você tenta finalizar a compra com o carrinho vazio -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToastErro" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">❌ Erro</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+          Seu carrinho está vazio!
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast que é mostrado quando você confirma o pedido -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToastConfirmado" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">✅ Pedido Recebido</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+          Seu pedido foi recebido com sucesso! Você será redirecionado em 5 segundos.
+        </div>
+      </div>
+    </div>
+
+    <!-- Produtos e carrinho -->
+    <div class="container my-5">
+      <h1 class="mb-4">Produtos</h1>
+      <p>Clique no nome dos produtos para adicionar 1 (uma) unidade.</p>
+      <div id="lista-produtos" class="row row-cols-1 row-cols-md-3 g-4"></div>
+    </div>
+    
+    <div class="container">
+      <h2 class="mb-4">Carrinho de compras</h2>
+      <div id="carrinho" class="list-group"></div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <h3 id="total">Total: <span class="precos">R$0.00</span></h3>
+        <div>
+          <button id="botao-limpar" class="btn btn-warning">Limpar carrinho</button>
+          <button id="botao-finalizar-compra" class="btn btn-success">Finalizar compra</button>
+        </div>
+      </div>
+    </div>    
     
 
     <!-- Rodapé -->
@@ -46,5 +178,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
